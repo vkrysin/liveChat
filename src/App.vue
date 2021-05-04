@@ -1,15 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="chat">
+    <list-users></list-users>
+    <chat-window></chat-window>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import ChatWindow from './components/ChatWindow'
+import ListUsers from './components/ListUsers'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ChatWindow,
+    ListUsers
   }
 }
 </script>
@@ -22,5 +27,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.chat {
+  display: flex;
 }
 </style>

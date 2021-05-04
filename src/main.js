@@ -1,4 +1,12 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './App'
+import { store } from './store/index'
+import 'normalize.css'
 
-createApp(App).mount('#app')
+
+const app = createApp(App)
+
+app.use(store)
+
+app.mount('#app')
+
