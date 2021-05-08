@@ -2,29 +2,36 @@
   <div class="users-list">
     <list-users-item></list-users-item>
     <div class="cl">{{users}}</div>
-    <div class="c" v-for="(item, index) in us" :key="index">{{us[index]}}</div>
+    <div class="c" v-for="(item, index) in users" :key="index">{{users[index]}}</div>
   </div>
 </template>
 
 <script>
 
 import ListUsersItem from './ListUsersItem'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ListUsers',
   components: { ListUsersItem },
   data() {
     return {
-      users: [],
-      counter: 0
+
     }
+  },
+  created() {
+    setInterval(this.updateUsers, 1000)
   },
   computed: {
     ...mapGetters({
-      us: 'userList/users'
+      users: 'userList/users'
     })
-  }
+  },
+  methods: {
+    ...mapActions({
+      updateUsers: 'userList/updateUsers'
+    })
+  },
 }
 </script>
 
