@@ -1,3 +1,5 @@
+import { ChatWindowService } from '../common/api.service';
+
 const state = {
   messages: ['Hello, i am fine',
           'Hello, i\'m fine too',
@@ -14,10 +16,16 @@ const mutations = {
 
 }
 
+const actions = {
+  signUp(userName) {
+    ChatWindowService.put(userName)
+  }
+}
 
 export default {
   namespaced: true,
   state,
   mutations,
-  getters
+  getters,
+  actions
 }

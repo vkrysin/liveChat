@@ -1,4 +1,4 @@
-import ListUsersService from '../common/api.service.js'
+import { ListUsersService } from '../common/api.service.js';
 
 const state = {
   users: []
@@ -11,14 +11,17 @@ const getters = {
 }
 
 const mutations = {
-
+  setUsers(state, users) {
+    state.users = users
+  }
 }
 
 const actions = {
-  updateUsers(state) {
+  updateUsers(context) {
     ListUsersService.get('http://127.0.0.1:8081', 'users')
-      .then(res => users = res.data)
-
+      .then(res =>  {
+        context.commit('setUsers', res.data.users)
+      })
   }
 }
 

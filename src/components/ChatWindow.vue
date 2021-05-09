@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <chat-messages v-for="(item, index) in messages" :key="index" :message="messages[index]"></chat-messages>
-    <chat-input></chat-input>
+    <chat-input v-if="auth"></chat-input>
+    <div v-else class="auth">
+      <h4>Your name</h4>
+      <input type="text" class="auth__name" v-model="userName">
+      <button @click="sendData">Enter</button>
+    </div>
   </div>
 </template>
 
@@ -13,6 +18,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: "ChatWindow",
+  data() {
+    return {
+      auth: false,
+      userName: ""
+    }
+  },
   components: {
     ChatMessages,
     ChatInput
@@ -21,7 +32,16 @@ export default {
     ...mapGetters({
       messages: 'chatWindow/messages'
     })
-  }
+  },
+  methods: {
+    // ...mapActions({
+    //   signUp: 'chatWindow/sighUp'
+    // }),
+    sendData() {
+      this.$data.auth = true;
+      this.$store.dispatch('chatWindow/signUp');
+    }
+  },
 }
 </script>
 
@@ -30,5 +50,11 @@ export default {
     width: 100%;
     height: 1080px;
     background-color: #E5E5E5;
+  }
+  .auth {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
   }
 </style>

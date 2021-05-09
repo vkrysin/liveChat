@@ -1,7 +1,6 @@
 <template>
   <div class="users-list">
     <list-users-item></list-users-item>
-    <div class="cl">{{users}}</div>
     <div class="c" v-for="(item, index) in users" :key="index">{{users[index]}}</div>
   </div>
 </template>
@@ -14,11 +13,6 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ListUsers',
   components: { ListUsersItem },
-  data() {
-    return {
-
-    }
-  },
   created() {
     setInterval(this.updateUsers, 1000)
   },
@@ -31,7 +25,7 @@ export default {
     ...mapActions({
       updateUsers: 'userList/updateUsers'
     })
-  },
+  }
 }
 </script>
 
