@@ -22,7 +22,7 @@ function parseGetRequest(fileName, req, res) {
   }
 }
 
-// db is json file
+// db is .json file
 function addUserToDB(user) {
   const pathToUsers = 'live-chat/server/users.json';
 
@@ -38,7 +38,25 @@ function addUserToDB(user) {
       });
   }});
 }
+function deleteUserFromDB(userName) {
+  const pathToUsers = 'live-chat/server/users.json';
+  fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data){
+      if (err) {
+          console.log(err);
+      } else {
+      let usersArr = JSON.parse(data).users;
+      userNamePosition = usersArr.indexOf(userName)
 
+      let objUsers = JSON.parse(data);
+      // delete item from array users
+      objUsers.users.splice(userNamePosition, 1)
+
+      json = JSON.stringify(objUsers);
+      fs.writeFile(pathToUsers, json, (err) => {
+        if(err) throw err;
+      });
+  }});
+}
 const server = http.createServer((req, res) => {
 
   res.statusCode = 200;
@@ -48,7 +66,6 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
   res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
-  console.log(req.method);
   if (req.method == 'GET') {
     parseGetRequest(serverData, req, res);
   }
@@ -63,6 +80,18 @@ const server = http.createServer((req, res) => {
         res.end();
       })
     }
+  }
+  if (req.method == 'DELETE') {
+    if (req.url.match(/users/g) !== null) {
+      let user = '';
+      req.on('data', (chunk) => {
+        user += chunk;
+      })
+      req.on('end', () => {
+        deleteUserFromDB(JSON.parse(user).name);
+        res.end();
+      })
+  }
   }
   if( req.method == 'OPTIONS') {
     res.end();

@@ -5,7 +5,7 @@
     <div v-else class="auth">
       <h4>Your name</h4>
       <input type="text" class="auth__name" v-model="userName">
-      <button @click="sendData">Enter</button>
+      <button @click.prevent="sendData">Enter</button>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@
 
 import ChatInput from './ChatInput.vue'
 import ChatMessages from './ChatMessages.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "ChatWindow",
@@ -28,20 +28,34 @@ export default {
     ChatMessages,
     ChatInput
   },
+  created() {
+    window.addEventListener('beforeunload', this.beforeWindowUnload);
+  },
+  beforeUnmount() {
+    window.removeEventListener('beforeunload', this.beforeWindowUnload);
+  },
   computed: {
     ...mapGetters({
-      messages: 'chatWindow/messages'
+      messages: 'chatWindow/messages',
+      currentUser: 'currentUser'
     })
   },
   methods: {
-    // ...mapActions({
-    //   signUp: 'chatWindow/sighUp'
-    // }),
+    ...mapActions({
+      // signUp: 'chatWindow/sighUp'
+      deleteUser: 'chatWindow/deleteUser'
+    }),
     sendData() {
       this.$data.auth = true;
-      this.$store.dispatch('chatWindow/signUp');
+      // add to users list on server
+      this.$store.dispatch('chatWindow/signUp', { name: this.$data.userName });
+      this.$store.commit('setCurrentUser', this.$data.userName)
+    },
+    beforeWindowUnload() {
+      this.deleteUser(this.currentUser);
     }
   },
+
 }
 </script>
 
