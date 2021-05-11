@@ -12,9 +12,13 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ListUsers',
+  data() {
+    return {
+    }
+  },
   components: { ListUsersItem },
   created() {
-    setInterval(this.updateUsers, 1000)
+    setInterval(this.updateUsers, 1000);
   },
   computed: {
     ...mapGetters({
