@@ -23,7 +23,7 @@ function parseGetRequest(fileName, req, res) {
 }
 
 // db is .json file
-function addUserToDB(user) {
+function addUserToDB(user, res) {
   const pathToUsers = 'live-chat/server/users.json';
 
   fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data){
@@ -31,11 +31,18 @@ function addUserToDB(user) {
           console.log(err);
       } else {
       obj = JSON.parse(data);
+
+      if(obj.users.indexOf(user) != -1) {
+        res.end(JSON.stringify({ isDuplicate: "true"}))
+        return
+      }
+
       obj.users.push(user);
       json = JSON.stringify(obj);
       fs.writeFile(pathToUsers, json, (err) => {
         if(err) throw err;
       });
+      res.end()
   }});
 }
 function deleteUserFromDB(userName) {
@@ -76,8 +83,7 @@ const server = http.createServer((req, res) => {
         user += chunk;
       })
       req.on('end', () => {
-        addUserToDB(JSON.parse(user).name);
-        res.end();
+        addUserToDB(JSON.parse(user).name, res);
       })
     }
   }
@@ -89,9 +95,8 @@ const server = http.createServer((req, res) => {
       })
       req.on('end', () => {
         deleteUserFromDB(JSON.parse(user).name);
-        res.end();
       })
-  }
+    }
   }
   if( req.method == 'OPTIONS') {
     res.end();

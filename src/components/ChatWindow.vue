@@ -6,6 +6,7 @@
       <h4>Your name</h4>
       <input type="text" class="auth__name" v-model="userName">
       <button @click.prevent="sendData">Enter</button>
+      <div v-if="notice" class="notice">This name has been reserved</div>
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ export default {
   data() {
     return {
       auth: false,
+      notice: false,
       userName: ""
     }
   },
@@ -46,13 +48,23 @@ export default {
       deleteUser: 'chatWindow/deleteUser'
     }),
     sendData() {
-      this.$data.auth = true;
       // add to users list on server
-      this.$store.dispatch('chatWindow/signUp', { name: this.$data.userName });
-      this.$store.commit('setCurrentUser', this.$data.userName)
+      let serverResponse = this.$store.dispatch('chatWindow/signUp', { name: this.$data.userName });
+      serverResponse.then(
+        res => {
+          if(res.data.isDuplicate !== "true") {
+            this.$data.auth = true;
+            this.$data.notice = false;
+            this.$store.commit('setCurrentUser', this.$data.userName)
+           }
+          this.$data.notice = true;
+        }
+      )
     },
     beforeWindowUnload() {
-      this.deleteUser(this.currentUser);
+      if(this.auth == true) {
+        this.deleteUser(this.currentUser);
+      }
     }
   },
 
@@ -69,6 +81,10 @@ export default {
     margin: 0 auto;
     display: flex;
     justify-content: center;
+
+    & .notice {
+      align-self: center;
+    }
 
   }
 </style>

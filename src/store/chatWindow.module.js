@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   signUp(context, userName) { // userName is object like { name: "someName" }
-    ChatWindowService.put(userName)
+    return ChatWindowService.put(userName)
   },
   deleteUser(context, userName) {
     ChatWindowService.delete(userName)
