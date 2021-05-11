@@ -5,12 +5,17 @@ import chatWindow from './chatWindow.module'
 export const store = createStore({
   state () {
     return {
-      users: []
+      currentUserName: ''
+    }
+  },
+  getters: {
+    currentUser(state) {
+      return state.currentUserName
     }
   },
   mutations: {
-    addUser(state, user) {
-      state.users.append(user)
+    setCurrentUser(state, userName) {
+      state.currentUserName = userName
     }
   },
   modules: {
