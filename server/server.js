@@ -2,9 +2,9 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 
-const hostname = '127.0.0.1';
+const hostname = '192.168.0.101';
 const port = 8081;
-const serverData = ["users", "comments"];
+const serverData = ["users", "messages"];
 // simple version
 function parseGetRequest(fileName, req, res) {
 
