@@ -1,9 +1,12 @@
 import { ChatWindowService } from '../common/api.service';
 
 const state = {
-  messages: ['Hello, i am fine',
-          'Hello, i\'m fine too',
-          'I called you two days ago']
+  messages: [
+    {
+      name: "Vlad",
+      message: "Hello person!"
+    }
+  ]
 }
 
 const getters = {
@@ -13,7 +16,10 @@ const getters = {
 }
 
 const mutations = {
-
+  setMessages(state, messages) {
+    console.log(messages);
+    state.messages = messages
+  }
 }
 
 const actions = {
@@ -22,6 +28,12 @@ const actions = {
   },
   deleteUser(context, userName) {
     ChatWindowService.delete(userName)
+  },
+  updateMessages(context) {
+    ChatWindowService.get('messages')
+      .then(res =>  {
+        context.commit('setMessages', res.data.messages)
+      })
   }
 }
 

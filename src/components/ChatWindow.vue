@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <chat-messages v-for="(item, index) in messages" :key="index" :message="messages[index]"></chat-messages>
+    <chat-messages v-for="(item, index) in messages" :key="index" :message="messages[index].message"></chat-messages>
     <chat-input v-if="auth"></chat-input>
     <div v-else class="auth">
       <h4>Your name</h4>
@@ -31,10 +31,9 @@ export default {
     ChatInput
   },
   created() {
+    setInterval(this.updateMessages, 1000);
     window.addEventListener('beforeunload', this.beforeWindowUnload);
-  },
-  beforeUnmount() {
-    window.removeEventListener('beforeunload', this.beforeWindowUnload);
+    window.addEventListener('unload', this.beforeWindowUnload);
   },
   computed: {
     ...mapGetters({
@@ -45,7 +44,8 @@ export default {
   methods: {
     ...mapActions({
       // signUp: 'chatWindow/sighUp'
-      deleteUser: 'chatWindow/deleteUser'
+      deleteUser: 'chatWindow/deleteUser',
+      updateMessages: 'chatWindow/updateMessages'
     }),
     sendData() {
       // add to users list on server

@@ -1,6 +1,6 @@
 // import axios from 'axios'
 const axios = require('axios');
-const resource = 'http://127.0.0.1:8081'
+const resource = 'http://192.168.0.101:8081'
 
 const ApiService = {
 
@@ -20,18 +20,22 @@ const ApiService = {
 export default ApiService;
 
 export const ListUsersService = {
-  get(resource, slug="") {
+  get(slug="") {
     return ApiService.get(resource, slug);
   }
 }
 
 export const ChatWindowService = {
+  get(slug="") {
+    return ApiService.get(resource, slug);
+  },
   put(userName) { // userName - object { name: "someName"}
     return ApiService.put(resource, "users", userName);
   },
   delete(userName) { // userName - object { name: "someName"}
     return ApiService.delete(resource, "users", userName)
-  }
+  },
+
 }
 // console.log(ApiService.get('http://127.0.0.1:8081/', 'users')
 //   .then(response => console.log(response.data)));
