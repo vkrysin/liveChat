@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   updateUsers(context) {
-    ListUsersService.get('http://127.0.0.1:8081', 'users')
+    ListUsersService.get('users')
       .then(res =>  {
         context.commit('setUsers', res.data.users)
       })
