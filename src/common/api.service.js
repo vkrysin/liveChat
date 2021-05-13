@@ -29,11 +29,11 @@ export const ChatWindowService = {
   get(slug="") {
     return ApiService.get(resource, slug);
   },
-  put(userName) { // userName - object { name: "someName"}
-    return ApiService.put(resource, "users", userName);
+  put(slug, params) {
+    return ApiService.put(resource, slug, params);
   },
-  delete(userName) { // userName - object { name: "someName"}
-    return ApiService.delete(resource, "users", userName)
+  delete(params) { // userName - object { name: "someName"}
+    return ApiService.delete(resource, "users", params)
   },
 
 }
