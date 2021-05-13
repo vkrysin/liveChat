@@ -17,17 +17,19 @@ const getters = {
 
 const mutations = {
   setMessages(state, messages) {
-    console.log(messages);
     state.messages = messages
   }
 }
 
 const actions = {
   signUp(context, userName) { // userName is object like { name: "someName" }
-    return ChatWindowService.put(userName)
+    return ChatWindowService.put('users', userName)
   },
   deleteUser(context, userName) {
     ChatWindowService.delete(userName)
+  },
+  sendMessage(context, message) {
+    ChatWindowService.put('messages', message)
   },
   updateMessages(context) {
     ChatWindowService.get('messages')

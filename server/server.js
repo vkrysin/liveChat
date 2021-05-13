@@ -2,7 +2,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 
-const hostname = '192.168.0.101';
+const hostname = '192.168.0.103';
 const port = 8081;
 const serverData = ["users", "messages"];
 // simple version
@@ -64,6 +64,23 @@ function deleteUserFromDB(userName) {
       });
   }});
 }
+function addMessageToDB(message, res) {
+  const pathToUsers = 'live-chat/server/messages.json';
+
+  fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data){
+      if (err) {
+          console.log(err);
+      } else {
+      obj = JSON.parse(data);
+      console.log(obj);
+      obj.messages.push(message);
+      json = JSON.stringify(obj);
+      fs.writeFile(pathToUsers, json, (err) => {
+        if(err) throw err;
+      });
+      res.end()
+  }});
+}
 const server = http.createServer((req, res) => {
 
   res.statusCode = 200;
@@ -84,6 +101,15 @@ const server = http.createServer((req, res) => {
       })
       req.on('end', () => {
         addUserToDB(JSON.parse(user).name, res);
+      })
+    }
+    if (req.url.match(/message/g) !== null) {
+      let message = '';
+      req.on('data', (chunk) => {
+        message += chunk;
+      })
+      req.on('end', () => {
+        addMessageToDB(JSON.parse(message), res);
       })
     }
   }

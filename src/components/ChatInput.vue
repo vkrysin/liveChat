@@ -1,7 +1,7 @@
 <template>
   <form>
-    <textarea @input="autoGrow" class="message"></textarea>
-    <input type="submit" value="">
+    <textarea @input="autoGrow" class="message" v-model="message"></textarea>
+    <input type="submit" value="" @click.prevent="$emit('send', message)">
   </form>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: "ChatInput",
   data() {
     return {
-
+      message: ""
     }
   },
   methods: {

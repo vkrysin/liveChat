@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <chat-messages v-for="(item, index) in messages" :key="index" :message="messages[index].message"></chat-messages>
-    <chat-input v-if="auth"></chat-input>
+    <chat-input v-if="auth"
+    @send="sendMessage({ name: currentUser, message: $event})"></chat-input>
     <div v-else class="auth">
       <h4>Your name</h4>
       <input type="text" class="auth__name" v-model="userName">
@@ -45,7 +46,8 @@ export default {
     ...mapActions({
       // signUp: 'chatWindow/sighUp'
       deleteUser: 'chatWindow/deleteUser',
-      updateMessages: 'chatWindow/updateMessages'
+      updateMessages: 'chatWindow/updateMessages',
+      sendMessage: 'chatWindow/sendMessage'
     }),
     sendData() {
       // add to users list on server
@@ -56,8 +58,10 @@ export default {
             this.$data.auth = true;
             this.$data.notice = false;
             this.$store.commit('setCurrentUser', this.$data.userName)
-           }
-          this.$data.notice = true;
+          }
+          else {
+            this.$data.notice = true;
+          }
         }
       )
     },
