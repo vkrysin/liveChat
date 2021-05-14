@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <chat-messages v-for="(item, index) in messages" :key="index" :message="messages[index].message"></chat-messages>
-    <chat-input v-if="auth"
-    @send="sendMessage({ name: currentUser, message: $event})"></chat-input>
+    <chat-messages v-for="(item, index) in messages"
+      :key="index" :message="messages[index].message"
+      :name="messages[index].name"
+      :isCurrent="isCurrent(messages[index].name)">
+    </chat-messages>
+    <chat-input v-if="auth" @send="sendMessage({ name: currentUser, message: $event})"></chat-input>
     <div v-else class="auth">
       <h4>Your name</h4>
       <input type="text" class="auth__name" v-model="userName">
@@ -14,22 +17,22 @@
 
 <script>
 
-import ChatInput from './ChatInput.vue'
-import ChatMessages from './ChatMessages.vue'
-import { mapGetters, mapActions } from 'vuex'
+import ChatInput from './ChatInput.vue';
+import ChatMessages from './ChatMessages.vue';
+import {mapGetters, mapActions} from 'vuex';
 
 export default {
-  name: "ChatWindow",
+  name: 'ChatWindow',
   data() {
     return {
       auth: false,
       notice: false,
-      userName: ""
-    }
+      userName: '',
+    };
   },
   components: {
     ChatMessages,
-    ChatInput
+    ChatInput,
   },
   created() {
     setInterval(this.updateMessages, 1000);
@@ -39,40 +42,41 @@ export default {
   computed: {
     ...mapGetters({
       messages: 'chatWindow/messages',
-      currentUser: 'currentUser'
-    })
+      currentUser: 'currentUser',
+    }),
   },
   methods: {
     ...mapActions({
       // signUp: 'chatWindow/sighUp'
       deleteUser: 'chatWindow/deleteUser',
       updateMessages: 'chatWindow/updateMessages',
-      sendMessage: 'chatWindow/sendMessage'
+      sendMessage: 'chatWindow/sendMessage',
     }),
     sendData() {
       // add to users list on server
-      let serverResponse = this.$store.dispatch('chatWindow/signUp', { name: this.$data.userName });
+      const serverResponse = this.$store.dispatch('chatWindow/signUp', {name: this.$data.userName});
       serverResponse.then(
-        res => {
-          if(res.data.isDuplicate !== "true") {
-            this.$data.auth = true;
-            this.$data.notice = false;
-            this.$store.commit('setCurrentUser', this.$data.userName)
-          }
-          else {
-            this.$data.notice = true;
-          }
-        }
-      )
+          (res) => {
+            if (res.data.isDuplicate !== 'true') {
+              this.$data.auth = true;
+              this.$data.notice = false;
+              this.$store.commit('setCurrentUser', this.$data.userName);
+            } else {
+              this.$data.notice = true;
+            }
+          },
+      );
     },
     beforeWindowUnload() {
-      if(this.auth == true) {
+      if (this.auth == true) {
         this.deleteUser(this.currentUser);
       }
-    }
+    },
+    isCurrent(userName) {
+      return userName === this.currentUser;
+    },
   },
-
-}
+};
 </script>
 
 <style lang="scss" scoped>

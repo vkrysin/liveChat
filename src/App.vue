@@ -7,16 +7,16 @@
 
 <script>
 
-import ChatWindow from './components/ChatWindow'
-import ListUsers from './components/ListUsers'
+import ChatWindow from './components/ChatWindow';
+import ListUsers from './components/ListUsers';
 
 export default {
   name: 'App',
   components: {
     ChatWindow,
-    ListUsers
-  }
-}
+    ListUsers,
+  },
+};
 </script>
 
 <style>
