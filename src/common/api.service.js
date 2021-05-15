@@ -14,7 +14,8 @@ const ApiService = {
   },
   delete(resource, slug='', params) {
     return axios.delete(`${resource}/${slug}`,
-        {headers: {'Content-Type': 'application/json'}, data: JSON.stringify(params)});
+        {headers: {'Content-Type': 'application/json'},
+          data: JSON.stringify(params)});
   },
 };
 export default ApiService;

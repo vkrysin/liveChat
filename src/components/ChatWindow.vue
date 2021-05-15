@@ -5,7 +5,9 @@
       :name="messages[index].name"
       :isCurrent="isCurrent(messages[index].name)">
     </chat-messages>
-    <chat-input v-if="auth" @send="sendMessage({ name: currentUser, message: $event})"></chat-input>
+    <chat-input v-if="auth"
+      @send="sendMessage({ name: currentUser, message: $event})">
+    </chat-input>
     <div v-else class="auth">
       <h4>Your name</h4>
       <input type="text" class="auth__name" v-model="userName">
@@ -54,7 +56,8 @@ export default {
     }),
     sendData() {
       // add to users list on server
-      const serverResponse = this.$store.dispatch('chatWindow/signUp', {name: this.$data.userName});
+      const serverResponse =
+        this.$store.dispatch('chatWindow/signUp', {name: this.$data.userName});
       serverResponse.then(
           (res) => {
             if (res.data.isDuplicate !== 'true') {
@@ -82,7 +85,7 @@ export default {
 <style lang="scss" scoped>
   .container {
     width: 100%;
-    height: 1080px;
+    min-height: 1080px;
     background-color: #E5E5E5;
   }
   .auth {

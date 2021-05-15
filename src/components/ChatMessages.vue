@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="current-user-message"></div> -->
-  <div class="container">
-    <div class="name">{{name}}</div>
+  <div class="message__container">
+    <div class="name" ref="name">{{name}}{{isCurrent}}</div>
     <div class="message">{{message}}</div>
   </div>
 </template>
@@ -10,12 +10,17 @@
 export default {
   name: 'ChatMessages',
   props: ['message', 'name', 'isCurrent'],
+  mounted() {
+    // highlight current user
+    if (this.isCurrent) {
+      this.$refs.name.style.color = 'blue';
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    width: max-content;
+  .message__container {
     display: flex;
     border: 1px solid #aaa;
 
