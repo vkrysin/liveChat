@@ -1,28 +1,21 @@
 <template>
   <div class="item">
-    <div class="item__ava-online">
-      <div class="online-indicator">
-        <!-- <svg height="10" width="10">
-          <circle cx="20" cy="20" r="5"
-          stroke="white" stroke-width="2" fill="red" />
-        </svg> -->
-      </div>
-    </div>
-    <h3 class="name">Vlad</h3>
+    {{name}}
   </div>
 </template>
 
 <script>
 export default {
   name: 'ListUsersItem',
-  data() {
-    return {
-
-    };
-  },
+  props: ['name'],
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .item {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #14a360;
+  }
 </style>

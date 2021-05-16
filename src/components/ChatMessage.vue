@@ -1,14 +1,14 @@
 <template>
   <!-- <div class="current-user-message"></div> -->
   <div class="message__container">
-    <div class="name" ref="name">{{name}}{{isCurrent}}</div>
+    <div class="name" ref="name">{{name}}:</div>
     <div class="message">{{message}}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChatMessages',
+  name: 'ChatMessage',
   props: ['message', 'name', 'isCurrent'],
   mounted() {
     // highlight current user
@@ -22,10 +22,12 @@ export default {
 <style lang="scss" scoped>
   .message__container {
     display: flex;
-    border: 1px solid #aaa;
+    padding-left: 20px;
+    margin-top: 5px;
 
     & .message {
-      margin-left: 30px;
+      font-family: sans-serif;
+      margin-left: 5px;
     }
   }
 </style>

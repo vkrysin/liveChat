@@ -1,8 +1,8 @@
 <template>
   <div class="users-list">
-    <list-users-item></list-users-item>
-    <div class="c" v-for="(item, index) in users"
-      :key="index">{{users[index]}}</div>
+    <h2>Users online</h2>
+    <list-users-item v-for="(item, index) in users"
+      :key="index" :name="users[index]"></list-users-item>
   </div>
 </template>
 
@@ -35,25 +35,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .c {
-    border: 1px solid blue;
-  }
   .users-list {
-    margin-top: 20px;
     height: 970px;
     width: 350px;
     background: #E3F6FC;
+
+    & h2 {
+      margin-top: 10px;
+      color: #b1c928;
+    }
   }
 
   .item {
     padding-top: 20px;
     padding-left: 35px;
     display: flex;
-
-    & .online-indicator {
-      position: relative;
-      left: 50px;
-      bottom: 65px;
-    }
   }
 </style>

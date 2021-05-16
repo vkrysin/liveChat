@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <chat-messages v-for="(item, index) in messages"
+    <h2>Chat</h2>
+    <chat-message v-for="(item, index) in messages"
       :key="index" :message="messages[index].message"
       :name="messages[index].name"
       :isCurrent="isCurrent(messages[index].name)">
-    </chat-messages>
+    </chat-message>
     <chat-input v-if="auth"
       @send="sendMessage({ name: currentUser, message: $event})">
     </chat-input>
@@ -20,7 +21,7 @@
 <script>
 
 import ChatInput from './ChatInput.vue';
-import ChatMessages from './ChatMessages.vue';
+import ChatMessage from './ChatMessage.vue';
 import {mapGetters, mapActions} from 'vuex';
 
 export default {
@@ -33,13 +34,15 @@ export default {
     };
   },
   components: {
-    ChatMessages,
+    ChatMessage,
     ChatInput,
   },
   created() {
     setInterval(this.updateMessages, 1000);
-    window.addEventListener('beforeunload', this.beforeWindowUnload);
+    // for mobile
+    window.onunload = window.onbeforeunload;
     window.addEventListener('unload', this.beforeWindowUnload);
+    window.addEventListener('beforeunload', this.beforeWindowUnload);
   },
   computed: {
     ...mapGetters({
@@ -87,6 +90,15 @@ export default {
     width: 100%;
     min-height: 1080px;
     background-color: #E5E5E5;
+
+    & h2 {
+      margin-top: 10px;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      font-size: 30px;
+      color: #f0cd32;
+    }
   }
   .auth {
     margin: 0 auto;

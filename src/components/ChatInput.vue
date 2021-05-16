@@ -1,6 +1,8 @@
 <template>
   <form>
-    <textarea @input="autoGrow" class="message" v-model="message"></textarea>
+    <textarea @input="autoGrow" class="message" v-model="message"
+      ref="textarea">
+    </textarea>
     <input type="submit" value="" @click.prevent="$emit('send', message)">
   </form>
 </template>
@@ -15,7 +17,7 @@ export default {
   },
   methods: {
     autoGrow() {
-      const textarea = document.querySelector('.message');
+      const textarea = this.$refs.textarea;
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
     },
@@ -29,17 +31,16 @@ export default {
     align-items: flex-end;
   }
   textarea[class="message"] {
+    margin: 10px 20px 0px 20px;
     width: 1050px;
-    height: 20px;
-
+    max-height: 100px;
     border-radius: 14px 0 0 14px;
-    overflow: hidden;
+    overflow-y: scroll;
     resize: none;
 
-    &:hover {
-      border: none;
+    &:active {
+      bottom: none;
     }
-    &:active { bottom: none; }
   }
   input[type="submit"] {
     width: 108px;
