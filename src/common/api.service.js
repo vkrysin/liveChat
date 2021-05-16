@@ -1,6 +1,6 @@
 // import axios from 'axios'
 const axios = require('axios');
-const resource = 'http://127.0.0.1:8081';
+const resource = 'http://192.168.0.103:8081';
 
 const ApiService = {
 
@@ -37,7 +37,4 @@ export const ChatWindowService = {
     return ApiService.delete(resource, 'users', params);
   },
 };
-// console.log(ApiService.get('http://127.0.0.1:8081/', 'users')
-//   .then(response => console.log(response.data)));
 
-// console.log(axios.put('http://127.0.0.1:8081/users', { name: 'Pavel'}));
