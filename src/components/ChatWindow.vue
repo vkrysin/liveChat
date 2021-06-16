@@ -40,9 +40,15 @@ export default {
   created() {
     setInterval(this.updateMessages, 1000);
     // for mobile
-    window.onunload = window.onbeforeunload;
-    window.addEventListener('unload', this.beforeWindowUnload);
-    window.addEventListener('beforeunload', this.beforeWindowUnload);
+    // window.onunload = window.onbeforeunload;
+    window.onbeforeunload = () => {
+      if (this.auth == true) {
+        this.deleteUser(this.currentUser);
+      };
+      return 'Are you sure';
+    };
+    // window.addEventListener('unload', this.beforeWindowUnload);
+    // window.addEventListener('beforeunload', this.beforeWindowUnload);
   },
   computed: {
     ...mapGetters({
@@ -77,6 +83,7 @@ export default {
       if (this.auth == true) {
         this.deleteUser(this.currentUser);
       }
+      return 'Are ot';
     },
     isCurrent(userName) {
       return userName === this.currentUser;

@@ -1,6 +1,8 @@
 // import axios from 'axios'
 const axios = require('axios');
-const resource = 'http://192.168.0.103:8081';
+
+const resource = 'http://morning-eyrie-13293.herokuapp.com';
+// const resource = 'http://192.168.0.102:3333';
 
 const ApiService = {
 

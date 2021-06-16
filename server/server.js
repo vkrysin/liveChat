@@ -1,10 +1,16 @@
 const http = require('http');
 const fs = require('fs');
 
-const hostname = '192.168.0.103';
-const port = 8081;
-const serverData = ['users', 'messages'];
+const port = process.env.PORT || 3333;
 
+const serverData = ['users', 'messages'];
+console.log('fdddddddddddddsfsdfsdfsdfs!!!!!!!!!!! directory', __dirname);
+
+fs.readdir(__dirname, (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+  });
+});
 /**
  * send JSON files which name is equal fileName
  * @param {string} fileName now available 'users', 'messages'
@@ -15,7 +21,7 @@ function parseGetRequest(fileName, req, res) {
   for (item of fileName) {
     const re = new RegExp(item);
     if (req.url.match(re) !== null) {
-      fs.readFile(`server/${item}.json`, (err, data) => {
+      fs.readFile(`app/server/${item}.json`, (err, data) => {
         if (err) throw err;
         res.end(JSON.stringify(JSON.parse(data)));
       });
@@ -30,7 +36,7 @@ function parseGetRequest(fileName, req, res) {
  * @param {*} res
  */
 function addUserToDB(user, res) {
-  const pathToUsers = 'server/users.json';
+  const pathToUsers = 'app/server/users.json';
 
   fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data) {
     if (err) {
@@ -57,7 +63,7 @@ function addUserToDB(user, res) {
  * @param {string} userName
  */
 function deleteUserFromDB(userName) {
-  const pathToUsers = 'server/users.json';
+  const pathToUsers = 'app/server/users.json';
   fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data) {
     if (err) {
       console.log(err);
@@ -72,7 +78,7 @@ function deleteUserFromDB(userName) {
       json = JSON.stringify(objUsers);
       fs.writeFile(pathToUsers, json, (err) => {
         if (err) throw err;
-      });
+       });
     }
   });
 }
@@ -82,7 +88,7 @@ function deleteUserFromDB(userName) {
  * @param {*} res
  */
 function addMessageToDB(message, res) {
-  const pathToUsers = 'server/messages.json';
+  const pathToUsers = 'app/server/messages.json';
 
   fs.readFile(pathToUsers, 'utf8', function readFileCallback(err, data) {
     if (err) {
@@ -109,7 +115,8 @@ const server = http.createServer((req, res) => {
       'PUT, POST, GET, DELETE, OPTIONS');
 
   if (req.method == 'GET') {
-    parseGetRequest(serverData, req, res);
+    // parseGetRequest(serverData, req, res);
+    res.end('Hello, World!');
   }
   if (req.method == 'PUT') {
     if (req.url.match(/users/g) !== null) {
@@ -145,8 +152,8 @@ const server = http.createServer((req, res) => {
   if ( req.method == 'OPTIONS') {
     res.end();
   }
-});
+}).listen(port);
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });

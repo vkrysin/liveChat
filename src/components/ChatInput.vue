@@ -3,7 +3,7 @@
     <textarea @input="autoGrow" class="message" v-model="message"
       ref="textarea">
     </textarea>
-    <input type="submit" value="" @click.prevent="$emit('send', message)">
+    <input type="button" value="Submit" @click="submit">
   </form>
 </template>
 
@@ -20,6 +20,10 @@ export default {
       const textarea = this.$refs.textarea;
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
+    },
+    submit() {
+      this.$el.querySelector('textarea').value = '';
+      this.$emit('send', this.message);
     },
   },
 };
@@ -42,7 +46,7 @@ export default {
       bottom: none;
     }
   }
-  input[type="submit"] {
+  input[type="button"] {
     width: 108px;
     height: 40px;
   }
