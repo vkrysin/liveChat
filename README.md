@@ -10,13 +10,11 @@ Frontend - Vue3, Vuex4
 npm install
 
 ```
-After that change ip in **api.service.js** and **server.js** from
-your local ip
+After that change ip in **api.service.js** from your local ip
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run serve && node server/server.js
 
-node 'pathToServer.js'
 ```
 
 ### Compiles and minifies for production
