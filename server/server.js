@@ -4,13 +4,6 @@ const fs = require('fs');
 const port = process.env.PORT || 3333;
 
 const serverData = ['users', 'messages'];
-console.log('fdddddddddddddsfsdfsdfsdfs!!!!!!!!!!! directory', __dirname);
-
-fs.readdir(__dirname, (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-  });
-});
 /**
  * send JSON files which name is equal fileName
  * @param {string} fileName now available 'users', 'messages'
