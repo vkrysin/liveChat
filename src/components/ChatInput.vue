@@ -24,6 +24,7 @@ export default {
     submit() {
       this.$el.querySelector('textarea').value = '';
       this.$emit('send', this.message);
+      this.message = '';
     },
   },
 };
@@ -31,14 +32,18 @@ export default {
 
 <style lang="scss" scoped>
   form {
+    padding-bottom: 15px;
+    margin-top: 10px;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+
+    & > * {
+      margin-top: 10px;
+    }
   }
   textarea[class="message"] {
-    margin: 10px 20px 0px 20px;
-    width: 1050px;
+    width: 300px;
     max-height: 100px;
-    border-radius: 14px 0 0 14px;
     overflow-y: scroll;
     resize: none;
 
@@ -48,6 +53,18 @@ export default {
   }
   input[type="button"] {
     width: 108px;
-    height: 40px;
   }
+
+
+  @media only screen and (min-width: 578px) {
+  form {
+    margin-top: 20px;
+    flex-direction: row;
+
+    & > * {
+      margin-top: 0;
+      margin-left: 10px;
+    }
+  }
+}
 </style>

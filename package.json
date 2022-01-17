@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vue-cli-service serve --host localhost",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@capacitor/android": "^3.2.4",
+    "@capacitor/cli": "^3.2.4",
+    "@capacitor/core": "^3.2.4",
+    "@capacitor/ios": "^3.2.4",
+    "@capacitor/local-notifications": "^1.0.9",
+    "@capacitor/push-notifications": "^1.0.7",
     "axios": "^0.21.1",
     "concurrently": "^6.2.0",
     "core-js": "^3.6.5",
@@ -19,7 +24,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
@@ -31,20 +35,6 @@
   },
   "engines": {
     "node": "14.x"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
   },
   "browserslist": [
     "> 1%",

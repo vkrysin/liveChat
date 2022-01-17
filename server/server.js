@@ -4,10 +4,9 @@ const fs = require('fs');
 const port = process.env.PORT || 3333;
 
 const serverData = ['users', 'messages'];
-console.log('fdddddddddddddsfsdfsdfsdfs!!!!!!!!!!! directory', __dirname);
 
 fs.readdir(__dirname, (err, files) => {
-  files.forEach(file => {
+  files.forEach((file) => {
     console.log(file);
   });
 });
@@ -78,7 +77,7 @@ function deleteUserFromDB(userName) {
       json = JSON.stringify(objUsers);
       fs.writeFile(pathToUsers, json, (err) => {
         if (err) throw err;
-       });
+      });
     }
   });
 }

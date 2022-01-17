@@ -3,7 +3,12 @@ node_modules
 # local env files
 .env.local
 .env.*.local
-
+dist/
+Procfile
+vue.config.js
+.gitignore
+android/
+d
 # Log files
 npm-debug.log*
 yarn-debug.log*
